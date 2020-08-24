@@ -11,38 +11,41 @@ export default new Vuex.Store({
     snackbar: {}
   },
   mutations: {
-    SET_LOADING_STATUS(state, status){
-      state.loading = status
+    SET_LOADING(state, status) {
+      state.loading = status;
     },
-    SET_USERS(state, users){
-      state.users = users
+    SET_USERS(state, users) {
+      state.users = users;
     },
-    SET_SNACKBAR(state, snackbar){
-      state.snackbar = snackbar
+    SET_SNACKBAR(state, snackbar) {
+      state.snackbar = snackbar;
     }
   },
   actions: {
-    fetchUsers(context){
-      context.commit('SET_LOADING_STATUS', true)
-      axios.get('users').then(response =>{
-        context.commit('SET_LOADING_STATUS', false)
-        context.commit('SET_USERS', response.data)
-      }). catch(error=>{
-        throw new Error(`API ${error}`);
-      })
+    fetchUsers(context) {
+      context.commit("SET_LOADING", true);
+      axios
+        .get("users")
+        .then(response => {
+          context.commit("SET_LOADING", false);
+          context.commit("SET_USERS", response.data);
+        })
+        .catch(error => {
+          throw new Error(`API ${error}`);
+        });
     },
     setSnackbar(context, snackbar) {
       snackbar.showing = true;
-      snackbar.status = snackbar.status || 'success'
-      context.commit('SET_SNACKBAR', snackbar)
+      snackbar.status = snackbar.status || "success";
+      context.commit("SET_SNACKBAR", snackbar);
     }
   },
   getters: {
     allUsers: state => {
-      return state.users
+      return state.users;
     },
     loading: state => {
-      return state.loading
+      return state.loading;
     }
   },
   modules: {}
